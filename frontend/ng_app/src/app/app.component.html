@@ -1,0 +1,73 @@
+<h2>Register Yo!</h2>
+<div class="row" *ngIf="!_userService.access">
+  <div class="col-sm-3">
+    <label>Name:</label><br />
+    <input type="text" name="register-name" [(ngModel)]="register.name">
+    <span *ngFor="let error of _userService.errors.name"><br />{{ error }}</span>
+  </div>
+  <div class="col-sm-3">
+    <label>Email:</label><br />
+    <input type="text" name="register-email" [(ngModel)]="register.email">
+    <span *ngFor="let error of _userService.errors.email"><br />{{ error }}</span></div>
+  <div class="col-sm-3">
+    <label>Password:</label><br />
+    <input type="password" name="register-password" [(ngModel)]="register.password">
+    <span *ngFor="let error of _userService.errors.password"><br />{{ error }}</span>
+  </div>
+  <div class="col-sm-3">
+    <button (click)="registerUser()" class="btn btn-primary">Register</button>&nbsp;
+  </div>
+  <div class="col-sm-12">
+    <span *ngFor="let error of _userService.errors.non_field_errors">{{ error }}<br /></span>
+  </div>
+</div>
+
+
+<h2>Login</h2>
+<div class="row" *ngIf="!_userService.access">
+  <div class="col-sm-4">
+    <label>Email:</label><br />
+    <input type="text" name="login-email" [(ngModel)]="user.email">
+    <span *ngFor="let error of _userService.errors.email"><br />{{ error }}</span></div>
+  <div class="col-sm-4">
+    <label>Password:</label><br />
+    <input type="password" name="login-password" [(ngModel)]="user.password">
+    <span *ngFor="let error of _userService.errors.password"><br />{{ error }}</span>
+  </div>
+  <div class="col-sm-4">
+    <button (click)="login()" class="btn btn-primary">Log In</button>&nbsp;
+  </div>
+  <div class="col-sm-12">
+    <span *ngFor="let error of _userService.errors.non_field_errors">{{ error }}<br /></span>
+  </div>
+</div>
+<div class="row" *ngIf="_userService.access">
+  <div class="col-sm-12">You are logged in as {{ _userService.name }}.<br />
+    Token Expires: {{ _userService.token_expires }}<br />
+    <button (click)="refreshToken()" class="btn btn-primary">Refresh Token</button>&nbsp;
+    <button (click)="logout()" class="btn btn-primary">Log Out</button>&nbsp;
+  </div>
+</div>
+
+<button (click)="updateData()">Update Data</button>
+
+<h2 class="mt-3">Micro Blog Posts</h2>
+<div *ngFor="let post of posts">
+  <div class="row mb-3">
+    <label class="col-md-2">By:</label>
+    <div class="col-md-2 mb-1">{{ post.user }}</div>
+    <label class="col-md-2">Date:</label>
+    <div class="col-md-6">{{ post.date }}</div>
+    <div class="col-md-12">{{ post.body }}</div>
+  </div>
+</div>
+
+<h3>Create a new post:</h3>
+
+<div class="row mb-1">
+  <label class="col-md-3">Enter your post:</label>
+  <div class="col-md-9 mb-1"><input type="text" name="body" [(ngModel)]="new_post.body"></div>
+  <div class="col-md-2 offset-3">
+    <button (click)="createPost()" class="btn btn-primary">Save</button>
+  </div>
+</div>
